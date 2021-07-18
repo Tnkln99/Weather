@@ -39,6 +39,7 @@ interface WeatherApiService {
     @GET("data/2.5/weather")
     suspend fun getData(
         @Query("q") cityName: String,
+        @Query("units") unit : String = "metric",
         @Query("APPID") appid : String = APPID
     ): WeatherModel
 }
