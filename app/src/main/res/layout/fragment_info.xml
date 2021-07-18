@@ -21,22 +21,33 @@
             android:orientation="vertical"
             android:padding="16dp">
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{viewModel.status.toString()}"
-                tools:text="status"/>
-
-            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textAlignment="center"
+                android:fontFamily="sans-serif-thin"
+                android:layout_marginBottom="@dimen/margin_between_elements"
+                android:textSize="20sp"
                 android:text="@{viewModel.weatherData.weather[0].description.toString()}"
                 tools:text="Description"/>
+
+            <ImageView
+                android:layout_width="@dimen/image_size"
+                android:layout_height="@dimen/image_size"
+                android:id="@+id/weatherImage"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_between_elements"
+                android:importantForAccessibility="no"
+                android:scaleType="center"
+                app:imageUrl="@{@string/icon(viewModel.weatherData.weather[0].icon.toString())}"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{Double.toString(viewModel.weatherData.main.temp)}"
-                tools:text="Temperature"/>
-
+                android:fontFamily="sans-serif-thin"
+                android:textSize="90sp"
+                android:layout_gravity="center"
+                android:text="@{@string/temperature(Double.toString(viewModel.weatherData.main.temp))}"
+                tools:text="22°C"/>
 
         </LinearLayout>
     </ScrollView>
