@@ -1,9 +1,10 @@
-package com.example.weather
+package com.example.weather.adapters
 
 import android.widget.ImageView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import coil.load
+import com.example.weather.R
 
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {

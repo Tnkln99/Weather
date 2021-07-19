@@ -14,42 +14,57 @@
     </data>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
+        android:layout_height="match_parent"
+        android:background="@drawable/background">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="16dp"
+            tools:context=".InfoFragment">
+
             <TextView
+                android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textAlignment="center"
                 android:fontFamily="sans-serif-thin"
-                android:layout_marginBottom="@dimen/margin_between_elements"
-                android:textSize="20sp"
                 android:text="@{viewModel.weatherData.weather[0].description.toString()}"
-                tools:text="Description"/>
+                android:textAlignment="center"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Description" />
 
             <ImageView
+                android:id="@+id/weatherImage"
                 android:layout_width="@dimen/image_size"
                 android:layout_height="@dimen/image_size"
-                android:id="@+id/weatherImage"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/margin_between_elements"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
                 android:importantForAccessibility="no"
                 android:scaleType="center"
-                app:imageUrl="@{@string/icon(viewModel.weatherData.weather[0].icon.toString())}"/>
+                app:imageUrl="@{@string/icon(viewModel.weatherData.weather[0].icon.toString())}"
+                app:layout_constraintBottom_toTopOf="@+id/textView3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
 
             <TextView
+                android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-thin"
-                android:textSize="90sp"
-                android:layout_marginTop="@dimen/margin_between_elements"
-                android:layout_gravity="center"
                 android:text="@{@string/temperature(Double.toString(viewModel.weatherData.main.temp))}"
-                tools:text="22°C"/>
+                android:textSize="90sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="22°C" />
 
-        </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>
