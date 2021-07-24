@@ -55,6 +55,7 @@
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5472dp"
                 android:fontFamily="sans-serif-thin"
                 android:text="@{@string/temperature(Double.toString(viewModel.weatherData.main.temp))}"
                 android:textSize="90sp"
@@ -62,6 +63,76 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="22°C" />
+
+            <TextView
+                android:id="@+id/maxTempText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="sans-serif-thin"
+                android:text="@string/maxTemp"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            <TextView
+                android:id="@+id/maxTemp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="sans-serif-thin"
+                android:text="@{@string/temperature(Double.toString(viewModel.weatherData.main.temp_max))}"
+                android:textAlignment="center"
+                android:textSize="45sp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/maxTempText"
+                tools:text="45°C" />
+            <TextView
+                android:id="@+id/minTempText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="sans-serif-thin"
+                android:text="@string/minTemp"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/maxTemp" />
+            <TextView
+                android:id="@+id/minTemp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="sans-serif-thin"
+                android:text="@{@string/temperature(Double.toString(viewModel.weatherData.main.temp_min))}"
+                android:textAlignment="center"
+                android:textSize="45sp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/minTempText"
+                tools:text="0°C" />
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="sans-serif-thin"
+                android:text="@{viewModel.status.toString()}"
+                android:textAlignment="center"
+                android:textSize="20dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/minTemp"
+                tools:text="Status" />
+
 
 
 

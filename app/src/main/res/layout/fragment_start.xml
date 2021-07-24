@@ -50,7 +50,7 @@
                 android:textSize="30dp"
                 android:layout_gravity="center"
                 android:fontFamily="sans-serif-thin"
-                tools:text="Past searches :"/>
+                android:text="Past searches :"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"

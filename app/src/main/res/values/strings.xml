@@ -6,5 +6,7 @@
     <string name="try_again">No city with that name</string>
     <string name="temperature">%s°C</string>
     <string name="icon">https://openweathermap.org/img/wn/%s@4x.png</string>
-    <string name="maxTemp">maxTemp</string>
+    <string name="maxTemp">max temperature today</string>
+    <string name="minTemp">min temperature today</string>
+    <string name="look_up_cities">Show stored cities</string>
 </resources>
