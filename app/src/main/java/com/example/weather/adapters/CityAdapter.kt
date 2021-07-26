@@ -1,5 +1,6 @@
 package com.example.weather.adapters
 
+import android.content.Context
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +16,9 @@ import com.example.weather.R
 class CityAdapter :
     RecyclerView.Adapter<CityAdapter.CityViewHolder>() {
 
-    private val list = ('A').rangeTo('Z').toList()
+
+    private var list : List<String> = listOf("1")
+
 
     class CityViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val button = view.findViewById<Button>(R.id.button_item)
@@ -26,13 +29,19 @@ class CityAdapter :
         val layout = LayoutInflater
             .from(parent.context)
             .inflate(R.layout.item_view, parent, false)
+
+        val context = parent.context
+        val sharedPref =
+            context.getSharedPreferences("WeatherAppSearchHis",Context.MODE_PRIVATE)
+        list = sharedPref.all.values.toList() as List<String>
+
         layout.accessibilityDelegate = Accessibility
         return CityViewHolder(layout)
     }
 
     override fun onBindViewHolder(holder: CityViewHolder, position: Int) {
-        val item = list.get(position)
-        holder.button.text = item.toString()
+        val item = list[position]
+        holder.button.text = item
         holder.button.setOnClickListener {
             //val selectedCity = holder.button.text.toString()
             holder.view.findNavController().navigate(R.id.action_startFragment_to_infoFragment)
@@ -50,10 +59,6 @@ class CityAdapter :
             info: AccessibilityNodeInfo?
         ) {
             super.onInitializeAccessibilityNodeInfo(host, info)
-            // With `null` as the second argument to [AccessibilityAction], the
-            // accessibility service announces "double tap to activate".
-            // If a custom string is provided,
-            // it announces "double tap to <custom string>".
             val customString = host?.context?.getString(R.string.look_up_cities)
             val customClick =
                 AccessibilityNodeInfo.AccessibilityAction(

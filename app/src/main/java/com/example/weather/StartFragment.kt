@@ -2,6 +2,7 @@ package com.example.weather
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,8 +23,6 @@ class StartFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private var isLinearLayoutManager = true
 
-    private val sharedPref = context?.getSharedPreferences("city names",Context.MODE_PRIVATE)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -41,20 +40,20 @@ class StartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerView = binding!!.recyclerView
+        recyclerView = binding?.recyclerView ?: return
         chooseLayout()
+
         binding?.viewModel = sharedViewModel
-        binding?.startFragment = this //burası sıkıntı cıkarıyo apply ile yaparsam
+        binding?.startFragment = this
         binding?.sendInfo?.setOnClickListener{
             getCityDetails()
         }
     }
     private fun getCityDetails(){
         val selectedCity = binding?.cityName?.text.toString().trim()
-        manageSharedPref(selectedCity)
         //Log.d("getCityDet", selectedCity)
         if(sharedViewModel.initWeatherData(selectedCity)){
-            //Log.d("inStartFrag",sharedViewModel.status.value.toString())
+            manageSharedPref(selectedCity)
             findNavController().navigate(R.id.action_startFragment_to_infoFragment)
         }
         else { binding?.cityName?.error = "something went wrong! Check city name or your connection" }
@@ -74,16 +73,15 @@ class StartFragment : Fragment() {
     }
 
     private fun manageSharedPref(selectedCity : String){
-        var id : Int? = sharedPref?.all?.size
-        if (id != null) {
-            id += 1
+        val sharedPref = activity?.getSharedPreferences(
+            "WeatherAppSearchHis", Context.MODE_PRIVATE)?: return
+        var id = sharedPref.all.size
+        id += 1
+        with (sharedPref.edit()) {
+            putString(id.toString(), selectedCity)
+            apply()
         }
-        if (sharedPref != null) { //bu null check gerekli mi emin değilim
-            with (sharedPref.edit()) {
-                putString(id.toString(), selectedCity)
-                apply()
-            }
-        }
+        Log.d("startFrag", sharedPref.all.values.toList().toString())
     }
 
 }
