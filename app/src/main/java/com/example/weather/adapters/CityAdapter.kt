@@ -8,17 +8,15 @@ import android.view.ViewGroup
 import android.view.accessibility.AccessibilityNodeInfo
 import android.widget.Button
 import androidx.annotation.RequiresApi
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.weather.CellClickListener
 import com.example.weather.R
 
 
-class CityAdapter :
+class CityAdapter(private val cellClickListener: CellClickListener) :
     RecyclerView.Adapter<CityAdapter.CityViewHolder>() {
 
-
-    private var list : List<String> = listOf("1")
-
+    private var list : List<String> = listOf("Your first search will be here")
 
     class CityViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val button = view.findViewById<Button>(R.id.button_item)
@@ -33,7 +31,7 @@ class CityAdapter :
         val context = parent.context
         val sharedPref =
             context.getSharedPreferences("WeatherAppSearchHis",Context.MODE_PRIVATE)
-        list = sharedPref.all.values.toList() as List<String>
+        if(sharedPref.all.values.toList().isNotEmpty()){ list = sharedPref.all.values.toList() as List<String>}
 
         layout.accessibilityDelegate = Accessibility
         return CityViewHolder(layout)
@@ -42,9 +40,9 @@ class CityAdapter :
     override fun onBindViewHolder(holder: CityViewHolder, position: Int) {
         val item = list[position]
         holder.button.text = item
-        holder.button.setOnClickListener {
+        holder.itemView.setOnClickListener {
             //val selectedCity = holder.button.text.toString()
-            holder.view.findNavController().navigate(R.id.action_startFragment_to_infoFragment)
+            cellClickListener.onCellClickListener(item)
         }
     }
 

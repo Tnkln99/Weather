@@ -59,6 +59,7 @@
                 android:clipToPadding="false"
                 android:padding="16dp"
                 tools:listitem="@layout/item_view" />
+
         </LinearLayout>
     </ScrollView>
 </layout>

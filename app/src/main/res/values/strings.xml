@@ -9,4 +9,5 @@
     <string name="maxTemp">max temperature today</string>
     <string name="minTemp">min temperature today</string>
     <string name="look_up_cities">Show stored cities</string>
+    <string name="clear">clear my search history</string>
 </resources>

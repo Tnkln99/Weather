@@ -16,7 +16,7 @@ import com.example.weather.adapters.CityAdapter
 import com.example.weather.databinding.FragmentStartBinding
 import com.example.weather.viewmodel.CityInfoViewModel
 
-class StartFragment : Fragment() {
+class StartFragment : Fragment(), CellClickListener{
     private var binding: FragmentStartBinding? = null
     private val sharedViewModel: CityInfoViewModel by activityViewModels()
 
@@ -45,9 +45,7 @@ class StartFragment : Fragment() {
 
         binding?.viewModel = sharedViewModel
         binding?.startFragment = this
-        binding?.sendInfo?.setOnClickListener{
-            getCityDetails()
-        }
+        binding?.sendInfo?.setOnClickListener{ getCityDetails() }
     }
     private fun getCityDetails(){
         val selectedCity = binding?.cityName?.text.toString().trim()
@@ -63,11 +61,11 @@ class StartFragment : Fragment() {
         when (isLinearLayoutManager) {
             true -> {
                 recyclerView.layoutManager = LinearLayoutManager(context)
-                recyclerView.adapter = CityAdapter()
+                recyclerView.adapter = CityAdapter(this)
             }
             false -> {
                 recyclerView.layoutManager = GridLayoutManager(context, 4)
-                recyclerView.adapter = CityAdapter()
+                recyclerView.adapter = CityAdapter(this)
             }
         }
     }
@@ -82,6 +80,12 @@ class StartFragment : Fragment() {
             apply()
         }
         Log.d("startFrag", sharedPref.all.values.toList().toString())
+    }
+
+    override fun onCellClickListener(data : String) {
+        if(sharedViewModel.initWeatherData(data)){
+            findNavController().navigate(R.id.action_startFragment_to_infoFragment)
+        }
     }
 
 }
