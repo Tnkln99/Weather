@@ -17,11 +17,12 @@
         android:layout_height="match_parent"
         android:background="@drawable/background">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            tools:context=".InfoFragment">
+            tools:context=".InfoFragment"
+            android:orientation="vertical">
             <TextView
                 android:id="@+id/cityName"
                 android:layout_width="match_parent"
@@ -32,10 +33,6 @@
                 android:textSize="70dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/minTemp"
                 tools:text="Name" />
 
             <TextView
@@ -48,9 +45,6 @@
                 android:textSize="20sp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cityName"
                 tools:text="Description" />
 
             <ImageView
@@ -62,23 +56,17 @@
                 android:layout_marginBottom="12dp"
                 android:importantForAccessibility="no"
                 android:scaleType="center"
-                app:imageUrl="@{@string/icon(viewModel.weatherData.weather[0].icon.toString())}"
-                app:layout_constraintBottom_toTopOf="@+id/textView3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
+                app:imageUrl="@{@string/icon(viewModel.weatherData.weather[0].icon.toString())}" />
 
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5472dp"
+                android:layout_marginBottom="12dp"
                 android:fontFamily="sans-serif-thin"
                 android:text="@{@string/temperature(Double.toString(viewModel.weatherData.main.temp))}"
                 android:textSize="90sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_gravity="center"
                 tools:text="22°C" />
 
             <TextView
@@ -90,10 +78,7 @@
                 android:textAlignment="center"
                 android:textSize="20sp"
                 android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+                android:layout_marginBottom="12dp" />
             <TextView
                 android:id="@+id/maxTemp"
                 android:layout_width="match_parent"
@@ -104,9 +89,6 @@
                 android:textSize="45sp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/maxTempText"
                 tools:text="45°C" />
             <TextView
                 android:id="@+id/minTempText"
@@ -117,10 +99,7 @@
                 android:textAlignment="center"
                 android:textSize="20sp"
                 android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/maxTemp" />
+                android:layout_marginBottom="12dp" />
             <TextView
                 android:id="@+id/minTemp"
                 android:layout_width="match_parent"
@@ -131,14 +110,7 @@
                 android:textSize="45sp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/minTempText"
                 tools:text="0°C" />
-
-
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
     </ScrollView>
 </layout>
