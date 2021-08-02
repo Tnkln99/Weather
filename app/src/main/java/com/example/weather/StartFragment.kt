@@ -39,7 +39,7 @@ class StartFragment : Fragment(), CellClickListener{
                     manageSharedPref(selectedCity)
                 }
                 findNavController().navigate(R.id.action_startFragment_to_infoFragment)
-                //sharedViewModel.setStatus(WeatherApiStatus.STANDBY)
+                sharedViewModel.setStatus(WeatherApiStatus.STANDBY)
             }
         }
     }
@@ -67,11 +67,6 @@ class StartFragment : Fragment(), CellClickListener{
         sharedViewModel.status.observe(viewLifecycleOwner, statusObserver)
 
     }
-    private fun getCityDetails(){
-        val selectedCity = binding?.cityName?.text.toString().trim()
-        sharedViewModel.initWeatherData(selectedCity)
-        //findNavController().navigate(R.id.action_startFragment_to_infoFragment)
-    }
 
     private fun manageSharedPref(selectedCity : String){
         val sharedPref = activity?.getSharedPreferences(
@@ -97,11 +92,13 @@ class StartFragment : Fragment(), CellClickListener{
         }
     }
 
+    private fun getCityDetails(){
+        val selectedCity = binding?.cityName?.text.toString().trim()
+        sharedViewModel.initWeatherData(selectedCity)
+    }
 
     override fun onCellClickListener(data : String) {
+        binding?.cityName?.text?.clear()
         sharedViewModel.initWeatherData(data)
-        if(data != "Your first search will be here") {
-            findNavController().navigate(R.id.action_startFragment_to_infoFragment)
-        }
     }
 }
