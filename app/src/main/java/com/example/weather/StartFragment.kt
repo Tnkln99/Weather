@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.weather.adapters.CityAdapter
 import com.example.weather.databinding.FragmentStartBinding
 import com.example.weather.viewmodel.CityInfoViewModel
+import com.example.weather.viewmodel.WeatherApiStatus
 
 class StartFragment : Fragment(), CellClickListener{
     private var binding: FragmentStartBinding? = null
@@ -23,15 +25,29 @@ class StartFragment : Fragment(), CellClickListener{
     private lateinit var recyclerView: RecyclerView
     private var isLinearLayoutManager = true
 
+    private lateinit var statusObserver : Observer<WeatherApiStatus>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+        statusObserver = Observer<WeatherApiStatus>{
+            Log.d("statusO", sharedViewModel.status.value.toString())
+            if(sharedViewModel.status.value.toString() == "DONE") {
+                val selectedCity = binding?.cityName?.text.toString().trim()
+                if(selectedCity.isNotEmpty()) {
+                    manageSharedPref(selectedCity)
+                }
+                findNavController().navigate(R.id.action_startFragment_to_infoFragment)
+                //sharedViewModel.setStatus(WeatherApiStatus.STANDBY)
+            }
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val fragmentBinding = FragmentStartBinding.inflate(inflater, container, false)
         binding = fragmentBinding
         return fragmentBinding.root
@@ -43,18 +59,29 @@ class StartFragment : Fragment(), CellClickListener{
         recyclerView = binding?.recyclerView ?: return
         chooseLayout()
 
+
         binding?.viewModel = sharedViewModel
         binding?.startFragment = this
         binding?.sendInfo?.setOnClickListener{ getCityDetails() }
+
+        sharedViewModel.status.observe(viewLifecycleOwner, statusObserver)
+
     }
     private fun getCityDetails(){
         val selectedCity = binding?.cityName?.text.toString().trim()
-        //Log.d("getCityDet", selectedCity)
-        if(sharedViewModel.initWeatherData(selectedCity)){
-            manageSharedPref(selectedCity)
-            findNavController().navigate(R.id.action_startFragment_to_infoFragment)
+        sharedViewModel.initWeatherData(selectedCity)
+        //findNavController().navigate(R.id.action_startFragment_to_infoFragment)
+    }
+
+    private fun manageSharedPref(selectedCity : String){
+        val sharedPref = activity?.getSharedPreferences(
+            "WeatherAppSearchHis", Context.MODE_PRIVATE)?: return
+        var id = sharedPref.all.size
+        id += 1
+        with (sharedPref.edit()) {
+            putString(id.toString(), selectedCity)
+            apply()
         }
-        else { binding?.cityName?.error = "something went wrong! Check city name or your connection" }
     }
 
     private fun chooseLayout() {
@@ -70,22 +97,11 @@ class StartFragment : Fragment(), CellClickListener{
         }
     }
 
-    private fun manageSharedPref(selectedCity : String){
-        val sharedPref = activity?.getSharedPreferences(
-            "WeatherAppSearchHis", Context.MODE_PRIVATE)?: return
-        var id = sharedPref.all.size
-        id += 1
-        with (sharedPref.edit()) {
-            putString(id.toString(), selectedCity)
-            apply()
-        }
-        Log.d("startFrag", sharedPref.all.values.toList().toString())
-    }
 
     override fun onCellClickListener(data : String) {
-        if(sharedViewModel.initWeatherData(data)){
+        sharedViewModel.initWeatherData(data)
+        if(data != "Your first search will be here") {
             findNavController().navigate(R.id.action_startFragment_to_infoFragment)
         }
     }
-
 }

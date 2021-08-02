@@ -8,7 +8,7 @@ import com.example.weather.model.WeatherModel
 import com.example.weather.network.WeatherApi
 import kotlinx.coroutines.launch
 
-enum class WeatherApiStatus { LOADING, ERROR, DONE }
+enum class WeatherApiStatus { LOADING, ERROR, DONE, STANDBY }
 
 class CityInfoViewModel : ViewModel() {
 
@@ -18,22 +18,26 @@ class CityInfoViewModel : ViewModel() {
     private val _status = MutableLiveData<WeatherApiStatus>()
     val status: LiveData<WeatherApiStatus> = _status
 
+    fun setStatus(x : WeatherApiStatus){
+        _status.value = x
+    }
 
-
-    fun initWeatherData(desiredCityName: String) : Boolean {
+    fun initWeatherData(desiredCityName: String){
+        //1
         viewModelScope.launch {
+            //3
             _status.value = WeatherApiStatus.LOADING
             try {
-                _status.value = WeatherApiStatus.DONE
+                //4
                 _weatherData.value = WeatherApi.retrofitService.getData(desiredCityName)
+                _status.value = WeatherApiStatus.DONE
             } catch (e: Exception) {
-                _status.value = WeatherApiStatus.ERROR
-                //Log.d("inViewModelE",_status.value.toString())
+                //5
                 _weatherData.value = null
                 _status.value = WeatherApiStatus.ERROR
             }
         }
-        //Log.d("inViewModel",_status.value.toString())
-        return _status.value == WeatherApiStatus.DONE
+        //2
+        _status.value = WeatherApiStatus.STANDBY
     }
 }

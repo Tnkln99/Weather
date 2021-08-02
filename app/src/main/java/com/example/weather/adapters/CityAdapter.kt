@@ -31,7 +31,7 @@ class CityAdapter(private val cellClickListener: CellClickListener) :
         val context = parent.context
         val sharedPref =
             context.getSharedPreferences("WeatherAppSearchHis",Context.MODE_PRIVATE)
-        if(sharedPref.all.values.toList().isNotEmpty()){ list = sharedPref.all.values.toList() as List<String>}
+        if(sharedPref.all.values.toList().isNotEmpty()){ list = sharedPref.all.values.toList() as List<String> }
 
         layout.accessibilityDelegate = Accessibility
         return CityViewHolder(layout)

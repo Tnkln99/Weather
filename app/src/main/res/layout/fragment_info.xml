@@ -22,6 +22,21 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             tools:context=".InfoFragment">
+            <TextView
+                android:id="@+id/cityName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="sans-serif-thin"
+                android:text="@{viewModel.weatherData.name}"
+                android:textAlignment="center"
+                android:textSize="70dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/minTemp"
+                tools:text="Name" />
 
             <TextView
                 android:id="@+id/textView"
@@ -31,9 +46,11 @@
                 android:text="@{viewModel.weatherData.weather[0].description.toString()}"
                 android:textAlignment="center"
                 android:textSize="20sp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cityName"
                 tools:text="Description" />
 
             <ImageView
@@ -118,20 +135,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/minTempText"
                 tools:text="0°C" />
-            <TextView
-                android:id="@+id/status"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fontFamily="sans-serif-thin"
-                android:text="@{viewModel.status.toString()}"
-                android:textAlignment="center"
-                android:textSize="20dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/minTemp"
-                tools:text="Status" />
 
 
 
