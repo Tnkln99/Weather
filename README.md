@@ -1,2 +1,2 @@
 # Weather
- Weather app I am making using MVVM architecture using openweatherapp API.
+ Weather app I am made using MVVM architecture using openweatherapp API.
